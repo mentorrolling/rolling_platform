@@ -34,9 +34,20 @@ let curso3 = new Curso(
   "Ludovico Peluche"
 );
 
-function agregarCurso() {
-  cursos.push(curso1, curso2, curso3);
+function agregarCurso(e) {
+  e.preventDefault();
+  let id = new Date().getTime();
+  let titulo = document.getElementById("titulo").value;
+  let desc = document.getElementById("desc").value;
+  let imagen = document.getElementById("imagen").value;
+  let mentor = document.getElementById("mentor").value;
+  let precio = document.getElementById("precio").value;
+
+  cursos.push(new Curso(id, titulo, desc, imagen, mentor, precio));
   localStorage.setItem("cursos", JSON.stringify(cursos));
+  document.getElementById("formulario").reset();
+  document.getElementById("titulo").focus();
+  // cursos.push(curso1, curso2, curso3);
   cargarTabla();
 }
 
@@ -55,6 +66,8 @@ function cargarTabla() {
     tableBody.appendChild(tr);
   });
 }
+
+document.getElementById("formulario").addEventListener("submit", agregarCurso);
 
 // agregarCurso();
 cargarTabla();

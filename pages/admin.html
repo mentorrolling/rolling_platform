@@ -10,6 +10,7 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../css/admin.css" />
 
     <title>Rolling Platform</title>
   </head>
@@ -70,28 +71,36 @@
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col-12 col-md-6 offset-md-3">
+          <div class="col-12 col-md-6 offset-md-3 form_curso">
             <h3>Agregar Curso</h3>
-            <form>
+            <form id="formulario">
               <label>Título</label>
-              <input class="form-control" type="text" />
+              <input id="titulo" class="form-control" type="text" required />
               <label>Descripción</label>
-              <textarea id="desc" class="form-control"></textarea>
+              <textarea id="desc" class="form-control" required></textarea>
               <label>Imagen</label>
               <input
+                id="imagen"
                 class="form-control"
                 type="text"
                 placeholder="Ingrese una url"
+                required
               />
               <label>Mentor</label>
-              <select class="form-control">
+              <select id="mentor" class="form-control" required>
                 <option selected>Elige un mentor</option>
                 <option value="Ludovico Peluche">Ludovico Peluche</option>
                 <option value="Daniel Pastoruti">Daniel Pastoruti</option>
                 <option value="Rocio Pereyra">Rocio Pereyra</option>
               </select>
               <label>Precio</label>
-              <input class="form-control" type="number" value="0" />
+              <input
+                id="precio"
+                class="form-control"
+                type="number"
+                value="0"
+                required
+              />
               <button class="btn btn-primary mt-3 float-end">Guardar</button>
             </form>
           </div>

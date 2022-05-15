@@ -10,6 +10,7 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../css/home.css" />
 
     <title>Rolling Platform</title>
   </head>
@@ -58,13 +59,74 @@
       </nav>
     </header>
     <main>
+      <!-- carusel  -->
+      <div
+        id="carouselExampleCaptions"
+        class="carousel slide"
+        data-bs-ride="carousel"
+        data-bs-pause="false"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="../assets/carusel1.jpg"
+              class="d-block w-100"
+              alt="program1"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="../assets/carusel2.jpg"
+              class="d-block w-100"
+              alt="program2"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="../assets/carusel3.jpg"
+              class="d-block w-100"
+              alt="program3"
+            />
+          </div>
+          <div class="overlay">
+            <h1 class="text-white">Todos los cursos que soñaste están aquí</h1>
+            <p>Somos la academia número 1 en el NOA.</p>
+            <p>
+              No te pierdas la oportunidad de formar parte de nuestra comunidad
+              de alumnos.
+            </p>
+            <p>Aprovechate de todas nuestras herramientas de aprendizaje.</p>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <!-- fin carusel  -->
+
       <div class="container">
         <div class="row mt-5">
           <div class="col">
-            <h1>Inicio</h1>
+            <h3>Conoce nuestros cursos</h3>
             <hr />
           </div>
         </div>
+        <div id="tarjetas_container" class="row mt-5"></div>
       </div>
     </main>
 
