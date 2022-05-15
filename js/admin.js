@@ -54,9 +54,9 @@ function agregarCurso(e) {
 function cargarTabla() {
   tableBody.innerHTML = "";
 
-  cursos.map(function (curso) {
+  cursos.map(function (curso, index) {
     let tr = document.createElement("tr");
-    let celda = `<th scope="row">${curso.id}</th>
+    let celda = `<th scope="row">${index + 1}</th>
         <td>${curso.titulo}</td>
         <td>${curso.descripcion}</td>
         <td>${curso.mentor}</td>
