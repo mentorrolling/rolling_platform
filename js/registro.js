@@ -3,10 +3,11 @@
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
 class Usuario {
-  constructor(nombre, email, password) {
+  constructor(nombre, email, password, rol = "usuario") {
     this.nombre = nombre;
     this.email = email;
     this.password = password;
+    this.rol = rol;
   }
 }
 
@@ -23,11 +24,21 @@ const registroUsuario = function (e) {
     return alert("No coinciden las contraseñas");
   }
 
+  let validar = usuarios.find((user) => {
+    return user.email === correo;
+  });
+
+  if (validar) {
+    return alert(
+      "El correo ya está registrado, inicie sesión con sus credenciales"
+    );
+  }
+
   usuarios.push(new Usuario(nombre, correo, password));
   localStorage.setItem("usuarios", JSON.stringify(usuarios));
   document.getElementById("formulario").reset();
   alert("Usuario registrado con éxito 😎");
-  document.getElementById("text_nombre").focus();
+  // document.getElementById("text_nombre").focus();
   location.replace("../index.html");
 };
 
