@@ -30,7 +30,7 @@ const registroUsuario = function (e) {
 
   if (validar) {
     return alert(
-      "El usuario ya está registrado, inicie sesión con sus credenciales"
+      "El Correo ya está registrado, inicie sesión con sus credenciales"
     );
   }
 
