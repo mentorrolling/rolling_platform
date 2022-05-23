@@ -12,6 +12,9 @@ class Curso {
 let cursos = JSON.parse(localStorage.getItem("cursos")) || [];
 let tableBody = document.querySelector("#table_body");
 
+//Para usar el modal
+let myModal = new bootstrap.Modal(document.getElementById("myModal"));
+
 // let curso1 = new Curso(
 //   1,
 //   "Html5",
@@ -57,6 +60,97 @@ function agregarCurso(e) {
   cargarTabla();
 }
 
+//-------mostrar modal------------------
+const editModal = function (cursoId) {
+  // console.log(cursoId);
+  myModal.show();
+  crearCuerpoModal(cursoId);
+};
+
+//crear el cuerpo del modal-----------------------------------
+const crearCuerpoModal = (index) => {
+  //limpiar el body del modal
+  document.querySelector(".modal-body").innerHTML = "";
+
+  //crear el contenido del body del modal que seria el formulario
+  let bodyModal = document.querySelector(".modal-body");
+  let contenidoBody = `<form id="form-update" onSubmit="actualizarCurso(event,${index})">
+  <label>Título</label>
+  <input id="titulo-update" class="form-control" type="text" value="${cursos[index].titulo}" required />
+  <label>Descripción</label>
+  <textarea id="desc-update" class="form-control" value="${cursos[index].descripcion}" required>${cursos[index].descripcion}</textarea>
+  <label>Imagen</label>
+  <input
+    id="imagen-update"
+    class="form-control"
+    type="text"
+    placeholder="Ingrese una url"
+    value="${cursos[index].imagen}"
+    required
+  />
+  <label>Mentor</label>
+  <select id="mentor-update" class="form-control" required>
+    <option selected>${cursos[index].mentor}</option>
+    <option value="Ludovico Peluche">Ludovico Peluche</option>
+    <option value="Daniel Pastoruti">Daniel Pastoruti</option>
+    <option value="Rocio Pereyra">Rocio Pereyra</option>
+  </select>
+  <label>Precio</label>
+  <input
+    id="precio-update"
+    class="form-control"
+    type="number"
+    value="${cursos[index].precio}"
+    required
+  />
+  <button class="btn btn-primary mt-3 float-end">Guardar</button>
+</form>`;
+
+  //agregar al body del modal
+  bodyModal.innerHTML = contenidoBody;
+};
+//------------------------------------------------------
+
+//Actualizar el curso--------------------------------
+const actualizarCurso = function (e, index) {
+  e.preventDefault();
+
+  //tenemos que obtener todos los datos del formulario
+  let titulo = document.getElementById("titulo-update").value;
+  let descripcion = document.getElementById("desc-update").value;
+  let imagen = document.getElementById("imagen-update").value;
+  let mentor = document.getElementById("mentor-update").value;
+  let precio = document.getElementById("precio-update").value;
+
+  const newData = {
+    titulo,
+    descripcion,
+    imagen,
+    mentor,
+    precio,
+  };
+
+  cursos.splice(index, 1, newData);
+  localStorage.setItem("cursos", JSON.stringify(cursos));
+  myModal.hide();
+  cargarTabla();
+};
+//---------------------------------------------------------
+
+//Eliminar un curso--------------------------------------
+const borrarCurso = (cursoId) => {
+  let validar = confirm(
+    `Está seguro que desea eliminar el curso ${cursos[cursoId].titulo}?`
+  );
+
+  if (validar) {
+    cursos.splice(cursoId, 1);
+    localStorage.setItem("cursos", JSON.stringify(cursos));
+    alert("Curso eliminado");
+    cargarTabla();
+  }
+};
+
 const cargarTabla = () => {
   tableBody.innerHTML = "";
 
@@ -66,7 +160,11 @@ const cargarTabla = () => {
         <td>${curso.titulo}</td>
         <td>${curso.descripcion}</td>
         <td>${curso.mentor}</td>
-        <td>${curso.precio}</td>`;
+        <td>${curso.precio}</td>
+        <td><button class="btn btn-warning btn-sm" onclick="editModal(${index})"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        <td><button class="btn btn-danger btn-sm" onclick="borrarCurso(${index})"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+        </td>
+        `;
 
     tr.innerHTML = celda;
     tableBody.appendChild(tr);
