@@ -8,11 +8,13 @@ class Curso {
     this.precio = precio;
   }
 }
+let main = document.querySelector("main");
 
 let cursos = JSON.parse(localStorage.getItem("cursos")) || [];
 let tableBody = document.querySelector("#table_body");
 var myModal = new bootstrap.Modal(document.getElementById("myModal"));
 
+let user = JSON.parse(localStorage.getItem("user")) || null;
 // let curso1 = new Curso(
 //   1,
 //   "Html5",
@@ -35,6 +37,34 @@ var myModal = new bootstrap.Modal(document.getElementById("myModal"));
 //   "Ludovico Peluche"
 // );
 
+//Verificar si el usuario es administrador o está logueado
+const validarUser = (user) => {
+  if (user?.rol !== "admin" || user === null) {
+    main.innerHTML = "";
+    let container = document.createElement("div");
+    container.classList = "container";
+
+    let estructuraMain = `<div class="row mt-5">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        No tiene permisos para acceder a esta página.
+      </div>
+      <div>
+      <a class="nav-item" href="./home.html">Volver a Home</a>
+    </div>
+    </div>
+  </div>
+      
+      `;
+    container.innerHTML = estructuraMain;
+    main.appendChild(container);
+  } else {
+    cargarTabla();
+  }
+};
+//-----------------------------------------------------------
+
+//Agregar un curso-------------------------------------------
 function agregarCurso(e) {
   e.preventDefault();
   let id = new Date().getTime();
@@ -52,6 +82,7 @@ function agregarCurso(e) {
   cargarTabla();
 }
 
+//Eliminar un curso---------------------------------------
 const borrarCurso = (cursoId) => {
   let index = cursos.findIndex((curso) => {
     return curso.id === cursoId;
@@ -71,11 +102,13 @@ const borrarCurso = (cursoId) => {
   }
 };
 
+//Abrir modal para editar curso-------------------------------------------
 const editModal = (index) => {
   myModal.show();
   crearCuerpoModal(index);
 };
 
+//Crear cuerpo del modal----------------------------------------------------
 const crearCuerpoModal = (cursoId) => {
   document.querySelector(".modal-body").innerHTML = "";
 
@@ -117,21 +150,9 @@ const crearCuerpoModal = (cursoId) => {
 </form>`;
 
   bodyModal.innerHTML = contenidoBody;
-  // document.getElementById("modal-content").appendChild(bodyModal);
-
-  // `
-  // <div class="modal-footer">
-  //   <button
-  //     type="button"
-  //     class="btn btn-secondary"
-  //     data-bs-dismiss="modal"
-  //   >
-  //     Close
-  //   </button>
-  //   <button type="button" class="btn btn-primary">Save changes</button>
-  // </div>`;
 };
 
+//Actualizar el curso con los datos del modal----------------------------
 const actualizarCurso = (e, index) => {
   e.preventDefault();
   let titulo = document.getElementById("titulo-update").value;
@@ -154,6 +175,7 @@ const actualizarCurso = (e, index) => {
   cargarTabla();
 };
 
+//Cargar Tabla--------------------------------------------
 function cargarTabla() {
   tableBody.innerHTML = "";
 
@@ -179,4 +201,5 @@ function cargarTabla() {
 document.getElementById("formulario").addEventListener("submit", agregarCurso);
 
 // agregarCurso();
-cargarTabla();
+// cargarTabla();
+validarUser(user);
