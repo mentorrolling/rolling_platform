@@ -17,6 +17,24 @@ if (usuario) {
 
     contenedorLista.appendChild(item);
   }
+} else {
+  document.querySelector("body").innerHTML = "";
+  let div = document.createElement("div");
+  div.classList = "container";
+  let estructura = `<div class="row mt-5">
+  <div class="col">
+    <div class="alert alert-danger" role="alert">
+      No tiene permisos para ver esta página
+    </div>
+    <div>
+    <a href="../index.html">Volver</a>
+    </div>
+  </div>
+</div>`;
+  div.innerHTML = estructura;
+  document.querySelector("body").appendChild(div);
+
+  // location.replace("../index.html");
 }
 
 //Cargar los cursos en tarjetas

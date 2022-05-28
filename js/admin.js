@@ -11,6 +11,7 @@ class Curso {
 
 let cursos = JSON.parse(localStorage.getItem("cursos")) || [];
 let tableBody = document.querySelector("#table_body");
+let user = JSON.parse(localStorage.getItem("user"));
 
 //Para usar el modal
 let myModal = new bootstrap.Modal(document.getElementById("myModal"));
@@ -41,6 +42,29 @@ let myModal = new bootstrap.Modal(document.getElementById("myModal"));
 
 // cursos.push(curso1, curso2, curso3);
 // localStorage.setItem("cursos", JSON.stringify(cursos));
+
+const validarUsuario = () => {
+  if (user.rol !== "admin") {
+    document.querySelector("main").innerHTML = "";
+
+    let div = document.createElement("div");
+    div.classList = "container";
+    let estructura = `<div class="row mt-5">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        No tiene permisos para ver esta página
+      </div>
+      <div>
+      <a href="./home.html">Volver</a>
+      </div>
+    </div>
+  </div>`;
+    div.innerHTML = estructura;
+    document.querySelector("main").appendChild(div);
+  } else {
+    cargarTabla();
+  }
+};
 
 function agregarCurso(e) {
   e.preventDefault();
@@ -173,4 +197,5 @@ const cargarTabla = () => {
 
 document.getElementById("formulario").addEventListener("submit", agregarCurso);
 
-cargarTabla();
+// cargarTabla();
+validarUsuario();
